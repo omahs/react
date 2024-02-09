@@ -62,3 +62,4 @@ export type {
 } from '../NavList'
 export * from './SelectPanel2'
 export * from './Tooltip'
+export * from './IssueLabelToken'
