@@ -7,6 +7,7 @@ import {getColorsFromHex} from './getColorsFromHex'
 import {useTheme} from '../../ThemeProvider'
 import TokenTextContainer from '../../Token/_TokenTextContainer'
 import RemoveTokenButton from '../../Token/_RemoveTokenButton'
+import './temp.v8Tokens.css'
 
 export type Variants =
   | 'pink'
@@ -44,10 +45,10 @@ export type variantColor = {
 }
 
 const variantColors = (variant: Variants): variantColor => ({
-  backgroundColor: `var(--label-bgColor-${variant})`,
-  backgroundColorHover: `var(--label-bgColor-${variant}-hover)`,
-  backgroundColorPressed: `var(--label-bgColor-${variant}-hover)`,
-  textColor: `var(--label-fgColor-${variant})`,
+  backgroundColor: `var(--label-${variant}-bgColor-rest)`,
+  backgroundColorHover: `var(--label-${variant}-bgColor-hover)`,
+  backgroundColorPressed: `var(--label-${variant}-bgColor-pressed)`,
+  textColor: `var(--label-${variant}-fgColor)`,
 })
 
 const getLabelColors = (

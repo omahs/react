@@ -27,11 +27,12 @@ const variants: Variants[] = [
   'auburn',
 ]
 
-const getRandomLabels = (amount: number, asVariant = true): React.ReactNode[] => {
+const getRandomLabels = (amount: number, asVariant = true, args: {interactive?: boolean}): React.ReactNode[] => {
   const labels: {
     variant: Variants
     hex: hexString
     text: string
+    interactive?: boolean
   }[] = [
     {
       variant: 'red',
@@ -150,6 +151,7 @@ const getRandomLabels = (amount: number, asVariant = true): React.ReactNode[] =>
           variant={asVariant ? variant : undefined}
           fillColor={!asVariant ? hex : undefined}
           text={text}
+          onClick={args.interactive ? () => action('label clicked') : undefined}
         />
       ) as ReactNode,
     )
@@ -164,6 +166,7 @@ export default {
     text: 'Token',
     variant: 'blue',
     numberOfTokens: 3,
+    interactive: false,
   },
   argTypes: {
     variant: {
@@ -173,6 +176,7 @@ export default {
       options: [...variants, undefined],
     },
     numberOfTokens: {control: {type: 'range', min: 1, max: 30, step: 1}},
+    interactive: {control: {type: 'boolean'}},
   },
 }
 
@@ -180,17 +184,19 @@ export const Playground = ({
   variant,
   numberOfTokens,
   text,
+  interactive,
   ...args
 }: {
   variant: Variants
   numberOfTokens: number
   text: string
+  interactive: boolean
 }) => {
   const [tokens, setTokens] = useState<React.ReactNode[] | null>(null)
 
   useEffect(() => {
-    setTokens(getRandomLabels(numberOfTokens - 1))
-  }, [numberOfTokens])
+    setTokens(getRandomLabels(numberOfTokens - 1, true, {interactive}))
+  }, [numberOfTokens, interactive])
 
   return (
     <Box
@@ -202,7 +208,13 @@ export const Playground = ({
         padding: 2,
       }}
     >
-      <IssueLabelToken {...args} size={'medium'} text={text} variant={variant} />
+      <IssueLabelToken
+        {...args}
+        size={'medium'}
+        text={text}
+        variant={variant}
+        onClick={interactive ? () => {} : undefined}
+      />
       {tokens}
     </Box>
   )
