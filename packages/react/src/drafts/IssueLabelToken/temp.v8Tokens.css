@@ -84,7 +84,7 @@
 }
 [data-color-mode='dark'][data-dark-theme^='dark'],
 [data-color-mode='auto'][data-light-theme^='dark'] {
---label-pink-bgColor-rest: #2d1524;
+  --label-pink-bgColor-rest: #2d1524;
   --label-pink-bgColor-hover: #451c35;
   --label-pink-bgColor-pressed: #65244a;
   --label-pink-fgColor: #f4a9cd;
