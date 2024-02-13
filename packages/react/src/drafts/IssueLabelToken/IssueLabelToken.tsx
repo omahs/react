@@ -9,7 +9,7 @@ import TokenTextContainer from '../../Token/_TokenTextContainer'
 import RemoveTokenButton from '../../Token/_RemoveTokenButton'
 import './temp.v8Tokens.css'
 
-export type Variants =
+export type Variant =
   | 'pink'
   | 'plum'
   | 'purple'
