@@ -11,12 +11,7 @@ import {variantColor} from './IssueLabelToken'
  * @param bgColor — the background color from the selected theme, needed to calc the contrast for the colors
  * @returns
  */
-export const getColorsFromHex = (
-  colorHex: hexString,
-  colorScheme = 'light',
-  // isSelected = false,
-  bgColor: string,
-): variantColor => {
+export const getColorsFromHex = (colorHex: hexString, colorScheme = 'light', bgColor: string): variantColor => {
   // start values for light mode
   let bgLightness = 96
   let lightnessIncrement = -1
@@ -65,9 +60,6 @@ export const getColorsFromHex = (
     textColor,
     backgroundColorHover: hsluvToHex({h, s, l: currentBgLightness + 4 * lightnessIncrement}),
     backgroundColorPressed: hsluvToHex({h, s, l: currentBgLightness + 8 * lightnessIncrement}),
-    // borderColor: isSelected
-    //   ? getColorWithContrast(backgroundColor, backgroundColor, 3, lightnessIncrement as 1 | -1)
-    //   : 'transparent',
   }
 }
 /**

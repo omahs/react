@@ -39,7 +39,6 @@ export interface IssueLabelTokenProps extends TokenBaseProps {
 export type variantColor = {
   backgroundColor: string
   textColor: string
-  borderColor?: string
   backgroundColorHover: string
   backgroundColorPressed: string
 }
@@ -75,7 +74,6 @@ const IssueLabelToken = forwardRef((props, forwardedRef) => {
     fillColor,
     onRemove,
     id,
-    isSelected, // is this needed on issue label tokens?
     text,
     href, // or could we just do it depending on href or onClick?
     onClick,
@@ -113,7 +111,7 @@ const IssueLabelToken = forwardRef((props, forwardedRef) => {
 
   const labelStyles: CSSObject = useMemo(() => {
     // TODO: border can be removed if we don't need selected states
-    const {backgroundColor, textColor, borderColor, backgroundColorHover, backgroundColorPressed} = getLabelColors(
+    const {backgroundColor, textColor, backgroundColorHover, backgroundColorPressed} = getLabelColors(
       variant,
       fillColor,
       resolvedColorScheme,
@@ -125,16 +123,14 @@ const IssueLabelToken = forwardRef((props, forwardedRef) => {
       position: 'relative',
       backgroundColor,
       color: textColor,
-      border: `1px solid ${borderColor || backgroundColor}`,
+      border: 'none',
       ...(isTokenInteractive(props)
         ? {
             '&:hover': {
               background: backgroundColorHover || backgroundColor,
-              border: `1px solid ${borderColor || backgroundColorHover || backgroundColor}`,
             },
             '&:active': {
               background: backgroundColorPressed || backgroundColor,
-              border: `1px solid ${borderColor || backgroundColorPressed || backgroundColor}`,
             },
           }
         : {}),
@@ -145,20 +141,20 @@ const IssueLabelToken = forwardRef((props, forwardedRef) => {
     <TokenBase
       onRemove={onRemove}
       id={id?.toString()}
-      isSelected={isSelected}
       text={text}
       size="medium"
       sx={labelStyles}
+      {...(!hasMultipleActionTargets ? interactiveTokenProps : {})}
       {...rest}
       ref={forwardedRef}
     >
-      <TokenTextContainer {...interactiveTokenProps}>{text}</TokenTextContainer>
+      <TokenTextContainer {...(hasMultipleActionTargets ? interactiveTokenProps : {})}>{text}</TokenTextContainer>
       {onRemove ? (
         <RemoveTokenButton
           onClick={onRemoveClick}
           size="medium"
           aria-hidden={hasMultipleActionTargets ? 'true' : 'false'}
-          isParentInteractive={isTokenInteractive(props)}
+          isParentInteractive={isTokenInteractive({...props, as: interactiveTokenProps.as})}
           sx={{
             position: 'relative',
             zIndex: '1',
