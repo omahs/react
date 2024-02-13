@@ -1,8 +1,9 @@
 import React from 'react'
-import IssueLabelToken, {Variants} from './IssueLabelToken'
+import IssueLabelToken from './IssueLabelToken'
 import Box from '../../Box'
+import {StoryObj} from '@storybook/react'
 
-const variants: Variants[] = [
+const variants = [
   'pink',
   'plum',
   'purple',
@@ -23,7 +24,10 @@ const variants: Variants[] = [
   'gray',
   'brown',
   'auburn',
-]
+] as const
+
+type Variants = typeof variants
+type Variant = Variants[number]
 
 export default {
   title: 'Drafts/Components/IssueLabelToken',
@@ -42,7 +46,7 @@ export default {
   },
 }
 
-export const Default = ({variant, text, ...args}: {variant: Variants; text: string}) => {
+export const Default: StoryObj = ({variant, text, ...args}: {variant: Variant; text: string}) => {
   return (
     <Box
       sx={{

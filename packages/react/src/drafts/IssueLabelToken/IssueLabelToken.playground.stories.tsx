@@ -1,10 +1,11 @@
 import React, {ReactNode, useEffect, useState} from 'react'
-import IssueLabelToken, {Variants} from './IssueLabelToken'
+import IssueLabelToken from './IssueLabelToken'
 import Box from '../../Box'
 import {action} from '@storybook/addon-actions'
 import {hexString} from '../utils/isHex'
+import {StoryObj} from '@storybook/react'
 
-const variants: Variants[] = [
+const variants = [
   'pink',
   'plum',
   'purple',
@@ -25,11 +26,14 @@ const variants: Variants[] = [
   'gray',
   'brown',
   'auburn',
-]
+] as const
+
+type Variants = typeof variants
+type Variant = Variants[number]
 
 const getRandomLabels = (amount: number, asVariant = true, args: {interactive?: boolean}): React.ReactNode[] => {
   const labels: {
-    variant: Variants
+    variant: Variant
     hex: hexString
     text: string
     interactive?: boolean
@@ -180,14 +184,14 @@ export default {
   },
 }
 
-export const Playground = ({
+export const Playground: StoryObj = ({
   variant,
   numberOfTokens,
   text,
   interactive,
   ...args
 }: {
-  variant: Variants
+  variant: Variant
   numberOfTokens: number
   text: string
   interactive: boolean

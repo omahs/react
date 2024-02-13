@@ -95,8 +95,5 @@
   ],
   "lint-staged": {
     "**/*.{js,ts,tsx,md,mdx}": "npm run lint"
-  },
-  "dependencies": {
-    "hsluv": "1.0.1"
   }
 }

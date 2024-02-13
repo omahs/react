@@ -32,7 +32,7 @@ export type Variant =
   | 'auburn'
 
 export interface IssueLabelTokenProps extends TokenBaseProps {
-  variant?: Variants
+  variant?: Variant
   fillColor?: hexString
 }
 
@@ -44,7 +44,7 @@ export type variantColor = {
   backgroundColorPressed?: string
 }
 
-const variantColors = (variant: Variants): variantColor => ({
+const variantColors = (variant: Variant): variantColor => ({
   backgroundColor: `var(--label-${variant}-bgColor-rest)`,
   backgroundColorHover: `var(--label-${variant}-bgColor-hover)`,
   backgroundColorPressed: `var(--label-${variant}-bgColor-pressed)`,
@@ -52,7 +52,7 @@ const variantColors = (variant: Variants): variantColor => ({
 })
 
 const getLabelColors = (
-  variant?: Variants,
+  variant?: Variant,
   fillColor?: hexString,
   resolvedColorScheme = 'light',
   bgColor = '#ffffff',
