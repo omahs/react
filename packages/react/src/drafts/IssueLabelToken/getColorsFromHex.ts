@@ -1,6 +1,7 @@
 import {getContrast} from 'color2k'
 import {Hsluv} from 'hsluv'
 import {hexString} from '../utils/isHex'
+import {variantColor} from './IssueLabelToken'
 
 /**
  * transforms a hex color provided by the user into a color object with background and text colors
@@ -10,7 +11,12 @@ import {hexString} from '../utils/isHex'
  * @param bgColor — the background color from the selected theme, needed to calc the contrast for the colors
  * @returns
  */
-export const getColorsFromHex = (colorHex: hexString, colorScheme = 'light', isSelected = false, bgColor: string) => {
+export const getColorsFromHex = (
+  colorHex: hexString,
+  colorScheme = 'light',
+  // isSelected = false,
+  bgColor: string,
+): variantColor => {
   // start values for light mode
   let bgLightness = 96
   let lightnessIncrement = -1
@@ -33,7 +39,7 @@ export const getColorsFromHex = (colorHex: hexString, colorScheme = 'light', isS
   /**
    * creating a background color from the provided hex color
    */
-  const backgroundColor = getColorWithContrast(
+  const {colorHex: backgroundColor, lightness: currentBgLightness} = getColorWithContrast(
     hsluvToHex({h, s, l: bgLightness}),
     bgColor,
     1.2,
@@ -47,7 +53,7 @@ export const getColorsFromHex = (colorHex: hexString, colorScheme = 'light', isS
   /**
    * creating a text color from with a contrast ratio of at least 4.5 to the generated background color
    */
-  const textColor = getColorWithContrast(
+  const {colorHex: textColor} = getColorWithContrast(
     hsluvToHex({h, s, l: 50}),
     backgroundColor,
     ratio,
@@ -57,13 +63,11 @@ export const getColorsFromHex = (colorHex: hexString, colorScheme = 'light', isS
   return {
     backgroundColor,
     textColor,
-    borderColor: isSelected
-      ? getColorWithContrast(backgroundColor, backgroundColor, 3, lightnessIncrement as 1 | -1)
-      : 'transparent',
-    '&:hover': {
-      backgroundColor: hsluvToHex({h, s, l: bgLightness + 2 * lightnessIncrement}),
-      boxShadow: 'var(--shadow-resting-medium)',
-    },
+    backgroundColorHover: hsluvToHex({h, s, l: currentBgLightness + 4 * lightnessIncrement}),
+    backgroundColorPressed: hsluvToHex({h, s, l: currentBgLightness + 8 * lightnessIncrement}),
+    // borderColor: isSelected
+    //   ? getColorWithContrast(backgroundColor, backgroundColor, 3, lightnessIncrement as 1 | -1)
+    //   : 'transparent',
   }
 }
 /**
@@ -79,7 +83,7 @@ const getColorWithContrast = (
   bgHex: string,
   contrastRatio: number,
   increment: 1 | -1,
-): hexString => {
+): {colorHex: hexString; lightness: number} => {
   // deconstruct color
   const hsluv = hexToHsluv(colorHex)
   let {l: lightness} = hsluv
@@ -89,8 +93,8 @@ const getColorWithContrast = (
     lightness += increment
     colorHex = hsluvToHex({h, s, l: lightness})
   }
-  // return hex color
-  return colorHex
+  // return hex color and ligthness
+  return {colorHex, lightness}
 }
 
 /**

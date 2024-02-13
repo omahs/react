@@ -40,8 +40,8 @@ export type variantColor = {
   backgroundColor: string
   textColor: string
   borderColor?: string
-  backgroundColorHover?: string
-  backgroundColorPressed?: string
+  backgroundColorHover: string
+  backgroundColorPressed: string
 }
 
 const variantColors = (variant: Variant): variantColor => ({
@@ -63,7 +63,7 @@ const getLabelColors = (
   }
   // valid hex string
   if (fillColor && isHex(fillColor)) {
-    return getColorsFromHex(fillColor, resolvedColorScheme, false, bgColor) // TODO: remove false prop if no selection nessesary for tokens
+    return getColorsFromHex(fillColor, resolvedColorScheme, bgColor) // TODO: remove false prop if no selection nessesary for tokens
   }
   // if invalid variant and invalid hex string, return default
   return variantColors('gray')
