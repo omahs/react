@@ -49,7 +49,7 @@ export const Interactive: StoryObj = ({variant}: {variant: Variant}) => {
     >
       <IssueLabelToken
         as="a"
-        href="/?path=/story/components-newtoken--interactive-token"
+        href="/?path=/story/drafts-components-issuelabeltoken-interactive--interactive"
         variant={variant}
         size={'medium'}
         text="Link"

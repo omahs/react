@@ -74,19 +74,25 @@ const IssueLabelToken = forwardRef((props, forwardedRef) => {
     variant,
     fillColor,
     onRemove,
-    hideRemoveButton, // could we just use onRemove? and hide it if it has no function?
     id,
     isSelected, // is this needed on issue label tokens?
     text,
-    size = 'medium', // this is not needed
-    as, // do we need to expose this?
     href, // or could we just do it depending on href or onClick?
     onClick,
     ...rest
   } = props
 
+  const getElementType = (
+    href?: string,
+    onClick?: React.MouseEventHandler<HTMLSpanElement | HTMLLinkElement | HTMLButtonElement>,
+  ): 'a' | 'button' | 'span' => {
+    if (href) return 'a'
+    if (onClick) return 'button'
+    return 'span'
+  }
+
   const interactiveTokenProps = {
-    as,
+    as: getElementType(href, onClick),
     href,
     onClick,
   }
@@ -98,7 +104,7 @@ const IssueLabelToken = forwardRef((props, forwardedRef) => {
       ? '#ffffff'
       : '#000000'
 
-  const hasMultipleActionTargets = isTokenInteractive(props) && Boolean(onRemove) && !hideRemoveButton
+  const hasMultipleActionTargets = isTokenInteractive(props) && Boolean(onRemove)
 
   const onRemoveClick: MouseEventHandler = e => {
     e.stopPropagation()
@@ -115,7 +121,7 @@ const IssueLabelToken = forwardRef((props, forwardedRef) => {
     )
 
     return {
-      paddingRight: hideRemoveButton || !onRemove ? undefined : 0,
+      paddingRight: !onRemove ? undefined : 0,
       position: 'relative',
       backgroundColor,
       color: textColor,
@@ -133,42 +139,36 @@ const IssueLabelToken = forwardRef((props, forwardedRef) => {
           }
         : {}),
     }
-  }, [variant, fillColor, resolvedColorScheme, bgColor, hideRemoveButton, onRemove, props])
+  }, [variant, fillColor, resolvedColorScheme, bgColor, onRemove, props])
 
   return (
-    <TokenBase // TODO: does it make sense to extend TokenBase?
+    <TokenBase
       onRemove={onRemove}
       id={id?.toString()}
       isSelected={isSelected}
       text={text}
-      size={size}
+      size="medium"
       sx={labelStyles}
-      {...(!hasMultipleActionTargets ? interactiveTokenProps : {})} // TODO: what is this doing? What is hasMultipleActionTargets doing?
       {...rest}
       ref={forwardedRef}
     >
-      <TokenTextContainer {...(hasMultipleActionTargets ? interactiveTokenProps : {})}>{text}</TokenTextContainer>
-      {!hideRemoveButton && onRemove ? (
+      <TokenTextContainer {...interactiveTokenProps}>{text}</TokenTextContainer>
+      {onRemove ? (
         <RemoveTokenButton
           onClick={onRemoveClick}
-          size={size}
+          size="medium"
           aria-hidden={hasMultipleActionTargets ? 'true' : 'false'}
           isParentInteractive={isTokenInteractive(props)}
-          sx={
-            hasMultipleActionTargets
-              ? {
-                  position: 'relative',
-                  zIndex: '1',
-                }
-              : {}
-          }
+          sx={{
+            position: 'relative',
+            zIndex: '1',
+          }}
         />
       ) : null}
     </TokenBase>
   )
-}) as PolymorphicForwardRefComponent<'span' | 'a' | 'button', IssueLabelTokenProps> // TODO: why do we need span?
-// TODO: what is PolymorphicForwardRefComponent doing?
+}) as PolymorphicForwardRefComponent<'span' | 'a' | 'button', IssueLabelTokenProps>
 
-IssueLabelToken.displayName = 'IssueLabelToken' // TODO: is this needed?
+IssueLabelToken.displayName = 'IssueLabelToken'
 
 export default IssueLabelToken
