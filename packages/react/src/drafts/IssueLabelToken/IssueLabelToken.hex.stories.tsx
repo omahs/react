@@ -21,7 +21,7 @@ export const Hex = ({hex, text, interactive, ...args}: {hex: hexString; interact
     >
       <IssueLabelToken
         {...args}
-        size={'medium'}
+        size="medium"
         text={text}
         fillColor={hex}
         onClick={interactive ? () => {} : undefined}
