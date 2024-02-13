@@ -35,7 +35,6 @@ export const getColorsFromHex = (colorHex: string, colorScheme = 'light', isSele
     ratio,
     lightnessIncrement as 1 | -1,
   )
-  // return
   return {
     backgroundColor,
     textColor,
