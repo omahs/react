@@ -1,9 +1,10 @@
-import React, {ReactNode, useEffect, useState} from 'react'
+import React, {useEffect, useState} from 'react'
 import IssueLabelToken from './IssueLabelToken'
 import Box from '../../Box'
-import {StoryObj} from '@storybook/react'
 import {action} from '@storybook/addon-actions'
-import {hexString} from '../utils/isHex'
+import type {ReactNode} from 'react'
+import type {StoryObj} from '@storybook/react'
+import type {hexString} from '../utils/isHex'
 
 const variants = [
   'pink',

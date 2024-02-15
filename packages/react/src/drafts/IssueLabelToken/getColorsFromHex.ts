@@ -1,7 +1,7 @@
 import {getContrast} from 'color2k'
 import {Hsluv} from 'hsluv'
-import {hexString} from '../utils/isHex'
-import {variantColor} from './IssueLabelToken'
+import type {hexString} from '../utils/isHex'
+import type {variantColor} from './IssueLabelToken'
 
 /**
  * transforms a hex color provided by the user into a color object with background and text colors
