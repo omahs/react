@@ -3,7 +3,12 @@ import IssueLabelToken from './IssueLabelToken'
 import Box from '../../Box'
 import {action} from '@storybook/addon-actions'
 import {StoryObj} from '@storybook/react'
+import {hexString} from '../utils/isHex'
 
+export default {
+  title: 'Drafts/Components/IssueLabelToken',
+  component: IssueLabelToken,
+}
 const variants = [
   'pink',
   'plum',
@@ -29,11 +34,6 @@ const variants = [
 
 type Variants = typeof variants
 type Variant = Variants[number]
-
-export default {
-  title: 'Drafts/Components/IssueLabelToken/Interactive',
-  component: IssueLabelToken,
-}
 
 export const Interactive: StoryObj = ({variant}: {variant: Variant}) => {
   return (
@@ -85,4 +85,46 @@ Interactive.argTypes = {
     },
     options: [...variants, undefined],
   },
+}
+
+export const Hex: StoryObj = ({
+  hex,
+  text,
+  interactive,
+  ...args
+}: {
+  hex: hexString
+  interactive: boolean
+  text: string
+}) => {
+  return (
+    <Box
+      sx={{
+        display: 'flex',
+        flexWrap: 'wrap',
+        gap: 2,
+        overflow: 'hidden',
+        padding: 2,
+      }}
+    >
+      <IssueLabelToken
+        {...args}
+        size="medium"
+        text={text}
+        fillColor={hex}
+        onClick={interactive ? () => {} : undefined}
+      />
+    </Box>
+  )
+}
+Hex.args = {
+  hex: '#59B200',
+  text: 'New Token',
+  variant: undefined,
+  interactive: true,
+}
+Hex.argTypes = {
+  hex: {control: {type: 'color'}},
+  variant: {control: {disable: true}},
+  interactive: {control: {type: 'boolean'}},
 }
