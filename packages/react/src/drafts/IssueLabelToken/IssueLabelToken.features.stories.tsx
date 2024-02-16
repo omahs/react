@@ -48,15 +48,13 @@ export const Interactive: StoryObj = ({variant}: {variant: Variant}) => {
       }}
     >
       <IssueLabelToken
-        as="a"
         href="/?path=/story/drafts-components-issuelabeltoken-interactive--interactive"
         variant={variant}
         size={'medium'}
         text="Link"
       />
-      <IssueLabelToken as="button" onClick={action('clicked')} variant={variant} size={'medium'} text="Button" />
+      <IssueLabelToken onClick={action('clicked')} variant={variant} size={'medium'} text="Button" />
       <IssueLabelToken
-        as="span"
         tabIndex={0}
         onFocus={action('focused')}
         variant={variant}
@@ -64,7 +62,6 @@ export const Interactive: StoryObj = ({variant}: {variant: Variant}) => {
         text="Focusable Span"
       />
       <IssueLabelToken
-        as="button"
         size={'medium'}
         text="Removable Button"
         variant={variant}

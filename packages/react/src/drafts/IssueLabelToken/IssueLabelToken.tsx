@@ -1,16 +1,16 @@
-import React, {forwardRef, useMemo} from 'react'
+import React, {forwardRef} from 'react'
 import type {MouseEventHandler} from 'react'
 import TokenBase, {isTokenInteractive} from '../../Token/TokenBase'
 import type {TokenBaseProps} from '../../Token/TokenBase'
 import {isHex} from '../utils/isHex'
 import type {hexString} from '../utils/isHex'
-import type {CSSObject} from 'styled-components'
 import type {ForwardRefComponent as PolymorphicForwardRefComponent} from '../../utils/polymorphic'
 import {getColorsFromHex} from './getColorsFromHex'
 import {useTheme} from '../../ThemeProvider'
 import TokenTextContainer from '../../Token/_TokenTextContainer'
 import RemoveTokenButton from '../../Token/_RemoveTokenButton'
 import './temp.v8Tokens.css'
+import styled from 'styled-components'
 
 export type Variant =
   | 'pink'
@@ -34,7 +34,8 @@ export type Variant =
   | 'brown'
   | 'auburn'
 
-export interface IssueLabelTokenProps extends TokenBaseProps {
+export interface IssueLabelTokenProps extends Omit<TokenBaseProps, 'as'> {
+  // this seems not to work to exlude as property from TokenBaseProps
   variant?: Variant
   fillColor?: hexString
 }
@@ -83,6 +84,36 @@ const IssueLabelToken = forwardRef((props, forwardedRef) => {
     ...rest
   } = props
 
+  const {resolvedColorScheme, theme} = useTheme()
+  const bgColor =
+    getComputedStyle(document.documentElement).getPropertyValue(theme?.colors.canvas.default) ||
+    resolvedColorScheme?.startsWith('light')
+      ? '#ffffff'
+      : '#000000'
+
+  const {backgroundColor, textColor, backgroundColorHover, backgroundColorPressed} = getLabelColors(
+    variant,
+    fillColor,
+    resolvedColorScheme,
+    bgColor,
+  )
+
+  const StyledIssueLabelToken: typeof TokenBase = styled(TokenBase)`
+    background-color: ${backgroundColor};
+    color: ${textColor};
+    padding-right: ${props => (!props.onRemove ? undefined : 0)};
+    position: relative;
+    border: none;
+    &[data-interactive='true'] {
+      &:hover {
+        background-color: ${backgroundColorHover};
+      }
+      &:active {
+        background-color: ${backgroundColorPressed};
+      }
+    }
+  `
+
   const getElementType = (
     href?: string,
     onClick?: React.MouseEventHandler<HTMLSpanElement | HTMLLinkElement | HTMLButtonElement>,
@@ -98,60 +129,36 @@ const IssueLabelToken = forwardRef((props, forwardedRef) => {
     onClick,
   }
 
-  const {resolvedColorScheme, theme} = useTheme()
-  const bgColor =
-    getComputedStyle(document.documentElement).getPropertyValue(theme?.colors.canvas.default) ||
-    resolvedColorScheme?.startsWith('light')
-      ? '#ffffff'
-      : '#000000'
-
   const hasMultipleActionTargets = isTokenInteractive(props) && Boolean(onRemove)
+
+  const hasHoverAndActiveStyles = (
+    as: 'a' | 'button' | 'span',
+    onClick?: React.MouseEventHandler<HTMLSpanElement | HTMLLinkElement | HTMLButtonElement>,
+  ) => Boolean(onClick || ['a', 'button'].includes(as))
 
   const onRemoveClick: MouseEventHandler = e => {
     e.stopPropagation()
     onRemove && onRemove()
   }
 
-  const labelStyles: CSSObject = useMemo(() => {
-    // TODO: border can be removed if we don't need selected states
-    const {backgroundColor, textColor, backgroundColorHover, backgroundColorPressed} = getLabelColors(
-      variant,
-      fillColor,
-      resolvedColorScheme,
-      bgColor,
-    )
-
-    return {
-      paddingRight: !onRemove ? undefined : 0,
-      position: 'relative',
-      backgroundColor,
-      color: textColor,
-      border: 'none',
-      ...(isTokenInteractive(props)
-        ? {
-            '&:hover': {
-              background: backgroundColorHover || backgroundColor,
-            },
-            '&:active': {
-              background: backgroundColorPressed || backgroundColor,
-            },
-          }
-        : {}),
-    }
-  }, [variant, fillColor, resolvedColorScheme, bgColor, onRemove, props])
-
   return (
-    <TokenBase
+    <StyledIssueLabelToken
+      data-interactive={hasHoverAndActiveStyles(getElementType(href, onClick), props.onClick)}
       onRemove={onRemove}
       id={id?.toString()}
       text={text}
       size="medium"
-      sx={labelStyles}
-      {...(!hasMultipleActionTargets ? interactiveTokenProps : {})}
+      {...(!hasMultipleActionTargets
+        ? {
+            forwardedAs: getElementType(href, onClick),
+            href,
+            onClick,
+          }
+        : {})}
       {...rest}
       ref={forwardedRef}
     >
-      <TokenTextContainer {...(hasMultipleActionTargets ? interactiveTokenProps : {})}>{text}</TokenTextContainer>
+      <TokenTextContainer {...(hasMultipleActionTargets ? {...interactiveTokenProps} : {})}>{text}</TokenTextContainer>
       {onRemove ? (
         <RemoveTokenButton
           onClick={onRemoveClick}
@@ -164,7 +171,7 @@ const IssueLabelToken = forwardRef((props, forwardedRef) => {
           }}
         />
       ) : null}
-    </TokenBase>
+    </StyledIssueLabelToken>
   )
 }) as PolymorphicForwardRefComponent<'span' | 'a' | 'button', IssueLabelTokenProps>
 
