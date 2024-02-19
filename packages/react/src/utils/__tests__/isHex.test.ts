@@ -1,4 +1,4 @@
-import {isHex} from './isHex'
+import {isHex} from '../isHex'
 
 describe('utils: isHex', () => {
   it('should return true for valid hex3, hex4, hex6 and hex8 strings', () => {

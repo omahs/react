@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from 'react'
 import IssueLabelToken from './IssueLabelToken'
-import Box from '../../Box'
+import Box from '../Box'
 import {action} from '@storybook/addon-actions'
 import type {ReactNode} from 'react'
 import type {StoryObj} from '@storybook/react'
@@ -33,7 +33,7 @@ type Variants = typeof variants
 type Variant = Variants[number]
 
 export default {
-  title: 'Drafts/Components/IssueLabelToken',
+  title: 'Components/IssueLabelToken',
   component: IssueLabelToken,
   args: {
     text: 'Token',

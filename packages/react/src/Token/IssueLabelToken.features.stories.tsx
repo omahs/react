@@ -1,12 +1,12 @@
 import React from 'react'
 import IssueLabelToken from './IssueLabelToken'
-import Box from '../../Box'
+import Box from '../Box'
 import {action} from '@storybook/addon-actions'
 import type {StoryObj} from '@storybook/react'
 import type {hexString} from '../utils/isHex'
 
 export default {
-  title: 'Drafts/Components/IssueLabelToken',
+  title: 'Components/IssueLabelToken',
   component: IssueLabelToken,
 }
 const variants = [
