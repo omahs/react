@@ -34,7 +34,7 @@ export type Variant =
   | 'brown'
   | 'auburn'
 
-export interface IssueLabelTokenProps extends Omit<TokenBaseProps, 'as'> {
+export interface IssueLabelTokenProps extends TokenBaseProps {
   // this seems not to work to exlude as property from TokenBaseProps
   variant?: Variant
   fillColor?: hexString
