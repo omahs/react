@@ -10,7 +10,7 @@ import TokenTextContainer from './_TokenTextContainer'
 import RemoveTokenButton from './_RemoveTokenButton'
 import './temp.v8Tokens.css'
 import styled from 'styled-components'
-import {hexString} from '../utils/isHex'
+import type {hexString} from '../utils/isHex'
 
 export type Variant =
   | 'pink'
@@ -89,6 +89,15 @@ const StyledIssueLabelToken: typeof TokenBase = styled(TokenBase)`
   }
 `
 
+const getElementType = (
+  href?: string,
+  onClick?: React.MouseEventHandler<HTMLSpanElement | HTMLLinkElement | HTMLButtonElement>,
+): 'a' | 'button' | 'span' => {
+  if (href) return 'a'
+  if (onClick) return 'button'
+  return 'span'
+}
+
 const IssueLabelToken = forwardRef((props, forwardedRef) => {
   const {
     variant,
@@ -114,15 +123,6 @@ const IssueLabelToken = forwardRef((props, forwardedRef) => {
     resolvedColorScheme,
     bgColor,
   )
-
-  const getElementType = (
-    href?: string,
-    onClick?: React.MouseEventHandler<HTMLSpanElement | HTMLLinkElement | HTMLButtonElement>,
-  ): 'a' | 'button' | 'span' => {
-    if (href) return 'a'
-    if (onClick) return 'button'
-    return 'span'
-  }
 
   const interactiveTokenProps = {
     as: getElementType(href, onClick),
@@ -163,7 +163,7 @@ const IssueLabelToken = forwardRef((props, forwardedRef) => {
             href,
             onClick,
           }
-        : {})}
+        : {as: 'span'})}
       {...rest}
       ref={forwardedRef}
     >
