@@ -73,6 +73,22 @@ const getLabelColors = (
   return variantColors('gray')
 }
 
+const StyledIssueLabelToken: typeof TokenBase = styled(TokenBase)`
+  background-color: var(--label-bgColor-rest);
+  color: var(--label-fgColor);
+  padding-right: ${props => (!props.onRemove ? undefined : 0)};
+  position: relative;
+  border: none;
+  &[data-interactive='true'] {
+    &:hover {
+      background-color: var(--label-bgColor-hover);
+    }
+    &:active {
+      background-color: var(--label-bgColor-pressed);
+    }
+  }
+`
+
 const IssueLabelToken = forwardRef((props, forwardedRef) => {
   const {
     variant,
@@ -98,22 +114,6 @@ const IssueLabelToken = forwardRef((props, forwardedRef) => {
     resolvedColorScheme,
     bgColor,
   )
-
-  const StyledIssueLabelToken: typeof TokenBase = styled(TokenBase)`
-    background-color: ${backgroundColor};
-    color: ${textColor};
-    padding-right: ${props => (!props.onRemove ? undefined : 0)};
-    position: relative;
-    border: none;
-    &[data-interactive='true'] {
-      &:hover {
-        background-color: ${backgroundColorHover};
-      }
-      &:active {
-        background-color: ${backgroundColorPressed};
-      }
-    }
-  `
 
   const getElementType = (
     href?: string,
@@ -149,6 +149,14 @@ const IssueLabelToken = forwardRef((props, forwardedRef) => {
       id={id?.toString()}
       text={text}
       size="medium"
+      style={
+        {
+          '--label-bgColor-rest': backgroundColor,
+          '--label-fgColor': textColor,
+          '--label-bgColor-hover': backgroundColorHover,
+          '--label-bgColor-pressed': backgroundColorPressed,
+        } as React.CSSProperties
+      }
       {...(!hasMultipleActionTargets
         ? {
             forwardedAs: getElementType(href, onClick),
