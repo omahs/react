@@ -2,8 +2,7 @@ import React, {forwardRef} from 'react'
 import type {MouseEventHandler} from 'react'
 import TokenBase, {isTokenInteractive} from './TokenBase'
 import type {TokenBaseProps} from './TokenBase'
-import {isHex} from '../utils/isHex'
-import type {hexString} from '../utils/isHex'
+import {toHex} from 'color2k'
 import type {ForwardRefComponent as PolymorphicForwardRefComponent} from '../utils/polymorphic'
 import {getColorsFromHex} from './getColorsFromHex'
 import {useTheme} from '../ThemeProvider'
@@ -11,6 +10,7 @@ import TokenTextContainer from './_TokenTextContainer'
 import RemoveTokenButton from './_RemoveTokenButton'
 import './temp.v8Tokens.css'
 import styled from 'styled-components'
+import {hexString} from '../utils/isHex'
 
 export type Variant =
   | 'pink'
@@ -37,7 +37,7 @@ export type Variant =
 export interface IssueLabelTokenProps extends TokenBaseProps {
   // this seems not to work to exlude as property from TokenBaseProps
   variant?: Variant
-  fillColor?: hexString
+  fillColor?: string
 }
 
 export type variantColor = {
@@ -56,7 +56,7 @@ const variantColors = (variant: Variant): variantColor => ({
 
 const getLabelColors = (
   variant?: Variant,
-  fillColor?: hexString,
+  fillColor?: string,
   resolvedColorScheme = 'light',
   bgColor = '#ffffff',
 ): variantColor => {
@@ -65,8 +65,9 @@ const getLabelColors = (
     return variantColors(variant)
   }
   // valid hex string
-  if (fillColor && isHex(fillColor)) {
-    return getColorsFromHex(fillColor, resolvedColorScheme, bgColor) // TODO: remove false prop if no selection nessesary for tokens
+  fillColor = fillColor !== undefined ? toHex(fillColor) : undefined
+  if (fillColor) {
+    return getColorsFromHex(fillColor as hexString, resolvedColorScheme, bgColor) // TODO: remove false prop if no selection nessesary for tokens
   }
   // if invalid variant and invalid hex string, return default
   return variantColors('gray')

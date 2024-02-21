@@ -249,7 +249,6 @@ exports[`@primer/react/drafts should not update exports without a semver change 
   "type DataTableProps",
   "default",
   "default",
-  "default",
   "Dialog",
   "type DialogButtonProps",
   "type DialogHeaderProps",
@@ -264,7 +263,6 @@ exports[`@primer/react/drafts should not update exports without a semver change 
   "InlineAutocomplete",
   "type InlineAutocompleteProps",
   "type InteractiveMarkdownViewerProps",
-  "type IssueLabelTokenProps",
   "MarkdownEditor",
   "type MarkdownEditorHandle",
   "type MarkdownEditorProps",
@@ -317,8 +315,6 @@ exports[`@primer/react/drafts should not update exports without a semver change 
   "useSafeAsyncCallback",
   "useSlots",
   "useSyntheticChange",
-  "type Variant",
-  "type variantColor",
 ]
 `;
 
@@ -336,7 +332,6 @@ exports[`@primer/react/experimental should not update exports without a semver c
   "type DataTableProps",
   "default",
   "default",
-  "default",
   "Dialog",
   "type DialogButtonProps",
   "type DialogHeaderProps",
@@ -351,7 +346,6 @@ exports[`@primer/react/experimental should not update exports without a semver c
   "InlineAutocomplete",
   "type InlineAutocompleteProps",
   "type InteractiveMarkdownViewerProps",
-  "type IssueLabelTokenProps",
   "MarkdownEditor",
   "type MarkdownEditorHandle",
   "type MarkdownEditorProps",
@@ -404,7 +398,5 @@ exports[`@primer/react/experimental should not update exports without a semver c
   "useSafeAsyncCallback",
   "useSlots",
   "useSyntheticChange",
-  "type Variant",
-  "type variantColor",
 ]
 `;
