@@ -1,11 +1,19 @@
 import React from 'react'
-import styled from 'styled-components'
 import {RelativeTimeElement} from '@github/relative-time-element'
-import {createComponent} from '@lit-labs/react'
+import createComponent from '../utils/custom-element'
 import type {ComponentProps} from '../utils/types'
-import sx from '../sx'
 
-const RelativeTime = styled(createComponent(React, 'relative-time', RelativeTimeElement))(sx)
+const RelativeTimeComponent = createComponent(RelativeTimeElement, 'relative-time')
 
-export type RelativeTimeProps = ComponentProps<typeof RelativeTime>
+export type RelativeTimeProps = ComponentProps<typeof RelativeTimeComponent>
+
+const localeOptions: Intl.DateTimeFormatOptions = {month: 'short', day: 'numeric', year: 'numeric'}
+function RelativeTime({date, ...props}: RelativeTimeProps) {
+  return (
+    <RelativeTimeComponent {...props} date={date}>
+      ${date?.toLocaleDateString('en', localeOptions) || ''}
+    </RelativeTimeComponent>
+  )
+}
+
 export default RelativeTime
