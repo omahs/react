@@ -1,5 +1,23 @@
 # @primer/react
 
+## 36.10.0
+
+### Minor Changes
+
+- [#4233](https://github.com/primer/react/pull/4233) [`fcd05284039b9768e37f687d65eece9242e4e2f8`](https://github.com/primer/react/commit/fcd05284039b9768e37f687d65eece9242e4e2f8) Thanks [@pksjce](https://github.com/pksjce)! - Add a new experimental component ActionBar
+
+### Patch Changes
+
+- [#4279](https://github.com/primer/react/pull/4279) [`a68e2e206eed4ecb8bbf9b0646271c776c301c1a`](https://github.com/primer/react/commit/a68e2e206eed4ecb8bbf9b0646271c776c301c1a) Thanks [@joshblack](https://github.com/joshblack)! - Add aria-labelledby to listbox within draft SelectPanel
+
+- [#4278](https://github.com/primer/react/pull/4278) [`9ec7262fd0bfad6de689c7a73fad71e800cf5620`](https://github.com/primer/react/commit/9ec7262fd0bfad6de689c7a73fad71e800cf5620) Thanks [@langermank](https://github.com/langermank)! - Address a few v8 color bugs
+
+- [#4294](https://github.com/primer/react/pull/4294) [`5ca5c0a6239029abbf285a0e7190e1c766dcab8b`](https://github.com/primer/react/commit/5ca5c0a6239029abbf285a0e7190e1c766dcab8b) Thanks [@siddharthkp](https://github.com/siddharthkp)! - experimental/SelectPanel: Cancel + close panel when user clicks outside
+
+- [#4239](https://github.com/primer/react/pull/4239) [`03d8d35c4d2be0dc2b1af67d5a3f57e255406453`](https://github.com/primer/react/commit/03d8d35c4d2be0dc2b1af67d5a3f57e255406453) Thanks [@langermank](https://github.com/langermank)! - Update the font-weight of the Dialog subtitle component to be normal
+
+- [#4295](https://github.com/primer/react/pull/4295) [`e1dbd6adb4ea2f302722b11c62a631b9c43277c2`](https://github.com/primer/react/commit/e1dbd6adb4ea2f302722b11c62a631b9c43277c2) Thanks [@langermank](https://github.com/langermank)! - Fix `placeholder` selector for form components
+
 ## 36.9.0
 
 ### Minor Changes
